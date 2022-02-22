@@ -79,6 +79,15 @@ namespace backend_assignment.Controllers
             }
             try
             {
+                var children = _context.ProduceSuppliers.Where(p => p.ProduceID == id);
+
+                if(children != null)
+                {
+                    foreach(var c in children)
+                    {
+                        _context.ProduceSuppliers.Remove(c);
+                    }
+                }
                 _context.Produces.Remove(item);
                 _context.SaveChanges();
                 return new ObjectResult(item);
@@ -86,6 +95,7 @@ namespace backend_assignment.Controllers
             {
                 return Conflict();
             }
+          
         }
     }
 }

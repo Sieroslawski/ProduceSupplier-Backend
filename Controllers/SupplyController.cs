@@ -77,7 +77,17 @@ namespace backend_assignment.Controllers
             }
             try
             {
-                _context.Suppliers.Remove(item);
+
+                var children = _context.ProduceSuppliers.Where(s => s.SupplierID == id);
+
+                if (children != null)
+                {
+                    foreach (var s in children)
+                    {
+                        _context.ProduceSuppliers.Remove(s);
+                    }
+                }
+                    _context.Suppliers.Remove(item);
                 _context.SaveChanges();
                 return new ObjectResult(item);
             }
